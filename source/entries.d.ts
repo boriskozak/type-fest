@@ -1,8 +1,8 @@
-import type {_ArrayEntry, _MapEntry, _ObjectEntry, _SetEntry} from './entry.d.ts';
+import type {_ArrayEntry, _MapEntry, _SetEntry} from './entry.d.ts';
+import type {ObjectEntries} from './object-entries.d.ts';
 
 type ArrayEntries<BaseType extends readonly unknown[]> = Array<_ArrayEntry<BaseType>>;
 type MapEntries<BaseType> = Array<_MapEntry<BaseType>>;
-type ObjectEntries<BaseType> = Array<_ObjectEntry<BaseType>>;
 type SetEntries<BaseType extends Set<unknown>> = Array<_SetEntry<BaseType>>;
 
 /**
@@ -11,6 +11,7 @@ Create a type that describes the key-value pairs produced when calling a collect
 For example the {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries|`Object`}, {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/entries|`Map`}, {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries|`Array`}, and {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/entries|`Set`} collections all have this method. Note that `WeakMap` and `WeakSet` do not have this method since their entries are not enumerable.
 
 @see `Entry` if you want to just access the type of a single entry.
+@see `ObjectEntries` if you only work with plain objects and `Object.entries()`. Unlike `Entries`, it preserves unresolved generic type parameters.
 
 @example
 ```

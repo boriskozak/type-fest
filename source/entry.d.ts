@@ -1,9 +1,10 @@
+import type {ObjectEntry} from './object-entry.d.ts';
+
 type MapKey<BaseType> = BaseType extends Map<infer KeyType, unknown> ? KeyType : never;
 type MapValue<BaseType> = BaseType extends Map<unknown, infer ValueType> ? ValueType : never;
 
 export type _ArrayEntry<BaseType extends readonly unknown[]> = [number, BaseType[number]];
 export type _MapEntry<BaseType> = [MapKey<BaseType>, MapValue<BaseType>];
-export type _ObjectEntry<BaseType> = [keyof BaseType, BaseType[keyof BaseType]];
 export type _SetEntry<BaseType> = BaseType extends Set<infer ItemType> ? [ItemType, ItemType] : never;
 
 /**
@@ -12,6 +13,7 @@ Create a type that describes a single key-value pair produced when calling a col
 For example the {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries|`Object`}, {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/entries|`Map`}, {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/entries|`Array`}, and {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/entries|`Set`} collections all have this method. Note that `WeakMap` and `WeakSet` do not have this method since their entries are not enumerable.
 
 @see `Entries` if you want to just access the type of the array of entries (which is the return of the `.entries()` method).
+@see `ObjectEntry` if you only work with plain objects and `Object.entries()`.
 
 @example
 ```
@@ -61,7 +63,7 @@ export type Entry<BaseType> =
 	BaseType extends Map<unknown, unknown> ? _MapEntry<BaseType>
 		: BaseType extends Set<unknown> ? _SetEntry<BaseType>
 			: BaseType extends readonly unknown[] ? _ArrayEntry<BaseType>
-				: BaseType extends object ? _ObjectEntry<BaseType>
+				: BaseType extends object ? ObjectEntry<BaseType>
 					: never;
 
 export {};
